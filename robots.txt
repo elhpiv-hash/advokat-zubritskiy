@@ -1,0 +1,7 @@
+# Пока сайт на GitHub Pages в подпапке, поисковики этот файл не читают:
+# robots.txt действует только в корне домена. При переезде на свой домен
+# замените адрес в строке Sitemap.
+User-agent: *
+Allow: /
+
+Sitemap: https://elhpiv-hash.github.io/advokat-zubritskiy/sitemap.xml

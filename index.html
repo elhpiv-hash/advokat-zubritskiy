@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <!-- viewport-fit=cover: страница рисуется под «чёлкой» и home-индикатором iPhone,
+       а безопасные отступы мы сами добавляем через env(safe-area-inset-*) — в первую
+       очередь у нижней мобильной панели. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- Без этого iOS Safari сам превращает в ссылки любые цепочки цифр:
+       рег. № 47/2790, номер удостоверения, номер офиса, цены. Настоящие телефоны
+       у нас размечены явными tel:-ссылками, поэтому автоопределение не нужно. -->
+  <meta name="format-detection" content="telephone=no">
+
+  <title>Адвокат в Санкт-Петербурге — Зубрицкий Дмитрий Сергеевич</title>
+  <meta name="description" content="Адвокат СПКА им. Ф. Н. Плевако, стаж более 8 лет. Уголовные дела, административные правонарушения, обжалование запрета на въезд и аннулирования ВНЖ/РВП. Круглосуточно.">
+
+  <!-- Пока сайт открыт на GitHub Pages, абсолютные URL ниже (canonical, Open Graph,
+       Twitter, JSON-LD) ведут туда: без настоящего адреса превью ссылки в мессенджерах
+       осталось бы без картинки. При переезде на свой домен замените
+       https://elhpiv-hash.github.io/advokat-zubritskiy/ на него здесь, в robots.txt
+       и sitemap.xml. -->
+  <link rel="canonical" href="https://elhpiv-hash.github.io/advokat-zubritskiy/">
+
+  <meta name="theme-color" content="#14171A">
+  <!-- Сайт тёмный (графит): говорим об этом браузеру до загрузки CSS, чтобы
+       фон до первой отрисовки, полосы прокрутки и системные контролы сразу были
+       тёмными, без белой вспышки. -->
+  <meta name="color-scheme" content="dark">
+
+  <!-- Класс js ставится синхронно и ДО подключения CSS:
+       1) стили «до появления» ([data-intro] и т. п.) применяются только при включённом
+          JS — без него контент виден сразу и полностью;
+       2) класс есть уже к первой отрисовке, поэтому блоки не мигают
+          «показались → спрятались → появились»;
+       3) инлайн-скрипт, стоящий ПОСЛЕ <link rel="stylesheet">, ждал бы загрузки CSS
+          и тормозил парсинг; перед ним он выполняется мгновенно.
+       Если меняете эту строку — пересчитайте sha256 в CSP (.htaccess). -->
+  <script>document.documentElement.classList.add('js');</script>
+
+  <!-- Preload основного шрифта: без него браузер узнает о woff2 только после того,
+       как скачает и разберёт CSS, — это лишний сетевой круг до появления
+       финального начертания. Грузим заранее только кириллицу Geologica: ею набран
+       почти весь текст. Остальные подмножества подтянутся по unicode-range.
+       crossorigin обязателен: шрифты всегда запрашиваются в режиме CORS, и без
+       атрибута предзагруженный файл не совпадёт с запросом из CSS и скачается дважды. -->
+  <link rel="preload" href="assets/fonts/geologica-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- Preload портрета — включить вместе с фото (см. комментарий в первом экране):
+       снять комментарий с <link> ниже. На телефоне портрет — самый крупный
+       элемент экрана (LCP): браузер должен начать качать его сразу, а не после того,
+       как дойдёт до разметки секции. imagesrcset и imagesizes совпадают с <source>
+       портрета — иначе браузер выберет по ним другой файл и скачает оба. -->
+  <!--
+  <link rel="preload" as="image" type="image/webp" fetchpriority="high"
+        imagesrcset="assets/img/hero-640.webp 640w, assets/img/hero-1000.webp 1000w, assets/img/hero-1600.webp 1600w"
+        imagesizes="(min-width: 64em) 45vw, calc(100vw - 2.5rem)">
+  -->
+
+  <!-- На сайт подключаются только минифицированные файлы (собираются build.sh).
+       ?v=N — сброс кэша: статика кэшируется на год (immutable), поэтому после
+       каждой пересборки номер версии нужно увеличить. -->
+  <link rel="stylesheet" href="css/style.min.css?v=3">
+
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+  <!-- Open Graph / Twitter Card: только абсолютные URL — мессенджеры и соцсети
+       не разрешают относительные пути. Размеры картинки указаны явно, чтобы
+       превью строилось сразу, без предварительного скачивания файла. -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="Адвокат Зубрицкий Д. С.">
+  <meta property="og:title" content="Адвокат Зубрицкий Дмитрий Сергеевич — Санкт-Петербург">
+  <meta property="og:description" content="Адвокат СПКА им. Ф. Н. Плевако, рег. № 47/2790, стаж более 8 лет. Уголовные дела, административные правонарушения, обжалование решений органов власти. Круглосуточно.">
+  <meta property="og:url" content="https://elhpiv-hash.github.io/advokat-zubritskiy/">
+  <meta property="og:image" content="https://elhpiv-hash.github.io/advokat-zubritskiy/assets/img/og-cover.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Зубрицкий Дмитрий Сергеевич, адвокат, Санкт-Петербург, рег. № 47/2790">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Адвокат Зубрицкий Дмитрий Сергеевич — Санкт-Петербург">
+  <meta name="twitter:description" content="Адвокат СПКА им. Ф. Н. Плевако, рег. № 47/2790, стаж более 8 лет. Круглосуточно.">
+  <meta name="twitter:image" content="https://elhpiv-hash.github.io/advokat-zubritskiy/assets/img/og-cover.jpg">
+  <meta name="twitter:image:alt" content="Зубрицкий Дмитрий Сергеевич, адвокат, Санкт-Петербург, рег. № 47/2790">
+
+  <!-- Schema.org: Attorney — подтип LocalBusiness, поэтому поисковики понимают
+       адрес, телефон и часы работы. Значения дублируют объект SITE из main.js:
+       при смене контактов правьте оба места. Почтового индекса и координат здесь
+       нет сознательно — их нет в исходных данных, а выдумывать нельзя. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Attorney",
+    "@id": "https://elhpiv-hash.github.io/advokat-zubritskiy/#attorney",
+    "name": "Адвокат Зубрицкий Дмитрий Сергеевич",
+    "url": "https://elhpiv-hash.github.io/advokat-zubritskiy/",
+    "image": "https://elhpiv-hash.github.io/advokat-zubritskiy/assets/img/og-cover.jpg",
+    "telephone": "+7 911 125-55-59",
+    "email": "advokat.zubritskiy@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Литейный пр., д. 15, лит. А, офис 5",
+      "addressLocality": "Санкт-Петербург",
+      "addressCountry": "RU"
+    },
+    "areaServed": [
+      { "@type": "City", "name": "Санкт-Петербург" },
+      { "@type": "AdministrativeArea", "name": "Ленинградская область" }
+    ],
+    "memberOf": {
+      "@type": "Organization",
+      "name": "Санкт-Петербургская коллегия адвокатов имени Ф. Н. Плевако"
+    },
+    "identifier": {
+      "@type": "PropertyValue",
+      "name": "Регистрационный номер в реестре адвокатов",
+      "value": "47/2790"
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      "opens": "00:00",
+      "closes": "23:59"
+    },
+    "sameAs": [
+      "https://harant.ru/lawyers/sankt-peterburg/zubriczkij-dmitrij-sergeevich/",
+      "https://t.me/zDmitryS"
+    ]
+  }
+  </script>
+
+  <!-- defer: скрипт качается параллельно с разбором HTML и выполняется после него,
+       не блокируя первую отрисовку. -->
+  <script src="js/main.min.js?v=3" defer></script>
+</head>
+<body>
+  <!-- Типографика: неразрывные пробелы записаны сущностью &nbsp; (а не символом U+00A0),
+       чтобы их было видно в редакторе и они не терялись при правках. -->
+
+  <!-- SVG-спрайт иконок: один раз в разметке, дальше <use href="#…">.
+       Иконки — Feather Icons (MIT). Размеры 0×0 в атрибутах, а не в CSS, —
+       чтобы пустой спрайт не занял 300×150 px, если стили не загрузились. -->
+  <svg width="0" height="0" class="sprite" aria-hidden="true">
+    <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+    </symbol>
+    <symbol id="i-whatsapp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+    </symbol>
+    <symbol id="i-telegram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 2 11 13"/>
+      <path d="M22 2 15 22l-4-9-9-4 20-7z"/>
+    </symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+      <path d="m22 6-10 7L2 6"/>
+    </symbol>
+    <!-- Монограмма: «З» и «Д» (контуры Geologica, без шрифта) в тонкой бордовой рамке.
+         Тот же знак — в favicon. Буквы — currentColor: цвет задаёт CSS. -->
+    <symbol id="i-mono" viewBox="0 0 48 48">
+      <rect x="2" y="2" width="44" height="44" fill="none" stroke="#C9505D" stroke-width="1.5"/>
+      <path fill="currentColor" d="M14.69 31.82Q12.96 31.82 11.53 31.38Q10.1 30.95 9.02 30.12L10.29 27.91Q11.06 28.59 12.14 28.98Q13.23 29.37 14.43 29.37Q15.46 29.37 16.21 29.08Q16.96 28.79 17.37 28.28Q17.77 27.77 17.78 27.07Q17.78 26 17.05 25.45Q16.32 24.9 14.79 24.9H11.82V22.7H14.58Q15.43 22.7 16.04 22.46Q16.66 22.22 17 21.76Q17.33 21.3 17.33 20.66Q17.33 20.03 17 19.6Q16.67 19.17 16.03 18.95Q15.38 18.73 14.45 18.73Q13.41 18.73 12.44 19.07Q11.47 19.41 10.78 20.02L9.49 17.98Q10.46 17.12 11.84 16.65Q13.23 16.18 14.8 16.18Q16.45 16.18 17.64 16.66Q18.83 17.13 19.47 18.02Q20.11 18.92 20.11 20.15Q20.11 20.84 19.79 21.49Q19.48 22.14 18.97 22.65Q18.46 23.15 17.87 23.42Q19.12 23.83 19.9 24.78Q20.67 25.74 20.66 27.18Q20.66 28.49 19.91 29.54Q19.17 30.59 17.83 31.21Q16.48 31.82 14.69 31.82ZM33.8 31.5V19.05H28.36V20.94Q28.36 23.61 28.09 25.48Q27.83 27.34 27.27 28.55Q26.7 29.76 25.78 30.44Q24.85 31.13 23.52 31.45L22.55 29.15Q23.5 28.93 24.12 28.48Q24.73 28.03 25.07 27.14Q25.42 26.26 25.56 24.75Q25.7 23.25 25.7 20.94V16.5H36.58V31.5ZM22.55 35.3V29.15L24.32 29.24L25.28 28.95H38.98V35.3H36.35V31.5H25.18V35.3Z"/>
+    </symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14"/>
+      <path d="m12 5 7 7-7 7"/>
+    </symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7 17 17 7"/>
+      <path d="M7 7h10v10"/>
+    </symbol>
+  </svg>
+
+  <a class="skip-link" href="#main">Перейти к&nbsp;содержанию</a>
+
+  <!-- ===== 1. ШАПКА ===== -->
+  <header class="header" data-header>
+    <div class="header__inner container">
+      <a class="brand" href="#top">
+        <svg class="brand__mark" aria-hidden="true"><use href="#i-mono"/></svg>
+        <span class="brand__text">
+          <span class="brand__name">Зубрицкий Д.&nbsp;С.</span>
+          <span class="brand__role">адвокат · Санкт-Петербург</span>
+        </span>
+      </a>
+
+      <!-- Кнопка стоит в DOM перед меню: так при открытом меню Tab ведёт с кнопки
+           прямо по пунктам, без принудительного переноса фокуса. На десктопе кнопка
+           скрыта и порядок обхода совпадает с визуальным: имя → меню → телефон. -->
+      <button class="burger" type="button" aria-expanded="false" aria-controls="menu" data-menu-toggle>
+        <span class="burger__label">Меню</span>
+        <span class="burger__box" aria-hidden="true">
+          <span class="burger__line"></span>
+          <span class="burger__line"></span>
+        </span>
+      </button>
+
+      <div class="menu" id="menu" data-menu>
+        <nav class="nav" aria-label="Разделы сайта">
+          <!-- role="list": Safari/VoiceOver перестаёт считать список списком,
+               если убрать маркеры через list-style: none. Атрибут возвращает семантику.
+               То же — у всех списков ниже. -->
+          <ul class="nav__list" role="list">
+            <li class="nav__item"><a class="nav__link" href="#services" data-spy>Направления</a></li>
+            <li class="nav__item"><a class="nav__link" href="#practice" data-spy>Практика</a></li>
+            <li class="nav__item"><a class="nav__link" href="#about" data-spy>Об&nbsp;адвокате</a></li>
+            <li class="nav__item"><a class="nav__link" href="#prices" data-spy>Стоимость</a></li>
+            <li class="nav__item"><a class="nav__link" href="#contacts" data-spy>Контакты</a></li>
+          </ul>
+        </nav>
+
+        <div class="menu__contacts">
+          <a class="menu__phone" href="tel:+79111255559" data-site="phone-link"><span data-site="phone-text">+7 (911) 125-55-59</span></a>
+          <p class="menu__hours">Круглосуточно, без&nbsp;выходных</p>
+          <div class="menu__actions">
+            <a class="btn btn--ghost" href="https://wa.me/79111255559" target="_blank" rel="noopener" data-site="whatsapp-link">
+              <svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp
+            </a>
+            <a class="btn btn--ghost" href="https://t.me/zDmitryS" target="_blank" rel="noopener" data-site="telegram-link">
+              <svg class="icon" aria-hidden="true"><use href="#i-telegram"/></svg>Telegram
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <a class="header__phone" href="tel:+79111255559" data-site="phone-link">
+        <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>
+        <span data-site="phone-text">+7 (911) 125-55-59</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- tabindex="-1": на main переводится фокус по ссылке «Перейти к содержанию»,
+       чтобы следующий Tab начинался с контента, а не снова с шапки. -->
+  <main id="main" tabindex="-1">
+
+    <!-- ===== 2. ПЕРВЫЙ ЭКРАН ===== -->
+    <!-- aria-labelledby вместо aria-label: имя секции берётся из видимого заголовка,
+         поэтому не расходится с ним при правках и переводится вместе со страницей
+         (переводчики браузеров aria-label не трогают). Так у всех секций. -->
+    <section class="hero theme-dark" id="top" aria-labelledby="hero-title">
+      <div class="hero__inner container">
+        <!-- Портрет стоит в DOM перед текстом: на телефоне он и на экране первый,
+             а на десктопе сетка ставит его в правую колонку. Фокусируемого внутри
+             нет, поэтому порядок Tab от этого не зависит.
+
+             ФОТО ПОКА НЕТ — стоит пустая заглушка нужных пропорций. Когда придёт фото:
+             1) положите портрет на прозрачном фоне в assets/img/src/hero.png
+                (по пояс, от 1600 px по ширине — из мелкого исходника портрет выйдет мягким);
+             2) выполните: bash build-images.sh
+             3) удалите строку с photo-slot ниже и снимите комментарий с <figure>;
+             4) в <head> снимите комментарий с preload портрета.
+             Стили для фото уже в CSS — пересобирать build.sh не нужно. -->
+        <div class="hero__media" data-intro>
+          <div class="photo-slot photo-slot--hero" aria-hidden="true"></div>
+          <!--
+          <figure class="hero__portrait">
+            <picture>
+              <source type="image/webp"
+                      srcset="assets/img/hero-640.webp 640w, assets/img/hero-1000.webp 1000w, assets/img/hero-1600.webp 1600w"
+                      sizes="(min-width: 64em) 45vw, calc(100vw - 2.5rem)">
+              <img class="hero__photo" src="assets/img/hero.png" width="1000" height="1250"
+                   alt="Адвокат Зубрицкий Дмитрий Сергеевич" fetchpriority="high">
+            </picture>
+            <figcaption class="hero__caption">Зубрицкий Дмитрий Сергеевич · адвокат</figcaption>
+          </figure>
+          -->
+        </div>
+
+        <div class="hero__content">
+          <p class="hero__meta">
+            <span class="hero__meta-item">Зубрицкий Дмитрий Сергеевич</span>
+            <span class="hero__meta-item">адвокат</span>
+            <span class="hero__meta-item"><abbr title="Санкт-Петербургская коллегия адвокатов">СПКА</abbr> им.&nbsp;Ф.&nbsp;Н.&nbsp;Плевако</span>
+            <span class="hero__meta-item">рег.&nbsp;№&nbsp;47/2790</span>
+          </p>
+
+          <!-- Заголовок без анимации появления: это кандидат в LCP,
+               а элемент с opacity: 0 браузер не засчитывает отрисованным. -->
+          <h1 class="hero__title" id="hero-title">Адвокат <span class="hero__title-line">в&nbsp;Санкт-Петербурге</span></h1>
+
+          <p class="hero__subtitle" data-intro>Защита по&nbsp;уголовным делам и&nbsp;делам об&nbsp;административных правонарушениях, обжалование решений органов власти. Стаж&nbsp;— более 8&nbsp;лет.</p>
+
+          <div class="hero__actions" data-hero-actions data-intro>
+            <a class="btn btn--primary" href="tel:+79111255559" data-site="phone-link">
+              <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>Позвонить адвокату
+            </a>
+            <a class="btn btn--ghost" href="https://t.me/zDmitryS" target="_blank" rel="noopener" data-site="telegram-link">
+              <svg class="icon" aria-hidden="true"><use href="#i-telegram"/></svg>Telegram
+            </a>
+            <a class="btn btn--ghost" href="https://wa.me/79111255559" target="_blank" rel="noopener" data-site="whatsapp-link">
+              <svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp
+            </a>
+          </div>
+
+          <p class="hero__note" data-intro>Устная консультация&nbsp;— 5&nbsp;000&nbsp;₽, письменная&nbsp;— 10&nbsp;000&nbsp;₽. Работа по&nbsp;договору.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 3. СВЯЗЬ ===== -->
+    <!-- Тонкая полоса сразу под первым экраном: режим и адрес — одной строкой,
+         рядом три компактные кнопки. Заголовка нет, поэтому имя области — aria-label. -->
+    <aside class="strip theme-deep" aria-label="Связь с адвокатом">
+      <div class="container strip__inner">
+        <p class="strip__text">
+          <span class="strip__item">Круглосуточно, без&nbsp;выходных</span>
+          <span class="strip__item">Выезд к&nbsp;клиенту</span>
+          <span class="strip__item">Литейный пр., 15</span>
+        </p>
+        <div class="strip__actions">
+          <a class="btn btn--primary btn--sm" href="tel:+79111255559" data-site="phone-link">
+            <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>Позвонить
+          </a>
+          <a class="btn btn--ghost btn--sm" href="https://t.me/zDmitryS" target="_blank" rel="noopener" data-site="telegram-link">
+            <svg class="icon" aria-hidden="true"><use href="#i-telegram"/></svg>Telegram
+          </a>
+          <a class="btn btn--ghost btn--sm" href="https://wa.me/79111255559" target="_blank" rel="noopener" data-site="whatsapp-link">
+            <svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ===== 4. НАПРАВЛЕНИЯ ===== -->
+    <section class="section theme-light" id="services" aria-labelledby="services-title">
+      <div class="container">
+        <h2 class="section__title" id="services-title">Направления практики</h2>
+
+        <!-- Карточка целиком — ссылка на подробный раздел: попасть пальцем легко,
+             а «Подробнее» прижато к низу, поэтому три карточки в ряду выглядят ровно. -->
+        <ul class="services" role="list">
+          <li>
+            <a class="service" href="#criminal">
+              <h3 class="service__title">Защита по&nbsp;уголовным делам</h3>
+              <p class="service__desc">Защита подозреваемых и&nbsp;обвиняемых, обжалование меры пресечения, представление интересов потерпевших и&nbsp;свидетелей.</p>
+              <span class="service__more">Подробнее<svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
+            </a>
+          </li>
+          <li>
+            <a class="service" href="#admin">
+              <h3 class="service__title">Защита по&nbsp;делам об&nbsp;административных правонарушениях</h3>
+              <p class="service__desc">При административном выдворении (ст.&nbsp;18.8 <abbr title="Кодекс Российской Федерации об административных правонарушениях">КоАП&nbsp;РФ</abbr>), помощь бизнесу при&nbsp;осуществлении проверок (ст.&nbsp;18.15 <abbr title="Кодекс Российской Федерации об административных правонарушениях">КоАП&nbsp;РФ</abbr>).</p>
+              <span class="service__more">Подробнее<svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
+            </a>
+          </li>
+          <li>
+            <a class="service" href="#admin">
+              <h3 class="service__title">Представление интересов по&nbsp;административным делам</h3>
+              <p class="service__desc">Обжалование решений органов власти: запрет на&nbsp;въезд, аннулирование <abbr title="вид на жительство">ВНЖ</abbr>/<abbr title="разрешение на временное проживание">РВП</abbr>, лишение гражданства.</p>
+              <span class="service__more">Подробнее<svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== 5. ЗАЩИТА ПО УГОЛОВНЫМ ДЕЛАМ ===== -->
+    <section class="section theme-dark" id="criminal" aria-labelledby="criminal-title">
+      <div class="container split">
+        <div>
+          <h2 class="section__title" id="criminal-title">Защита по&nbsp;уголовным делам</h2>
+
+          <!-- «Ступени»: слева — о&nbsp;чём, справа — формулировка адвоката -->
+          <dl class="stage-list">
+            <div class="stage">
+              <dt class="stage__name">Расследование и&nbsp;суд</dt>
+              <dd class="stage__desc">Защита подозреваемых и&nbsp;обвиняемых на&nbsp;стадии предварительного расследования и&nbsp;в&nbsp;суде</dd>
+            </div>
+            <div class="stage">
+              <dt class="stage__name">Мера пресечения</dt>
+              <dd class="stage__desc">Обжалование постановлений об&nbsp;избрании меры пресечения</dd>
+            </div>
+            <div class="stage">
+              <dt class="stage__name">Потерпевшие и&nbsp;свидетели</dt>
+              <dd class="stage__desc">Представление интересов потерпевших и&nbsp;свидетелей на&nbsp;любой стадии процесса</dd>
+            </div>
+          </dl>
+        </div>
+
+        <!-- Во второй колонке — цены по уголовным делам:
+             это то, что человек ищет сразу после перечня услуг. -->
+        <aside class="tariff" aria-labelledby="criminal-prices">
+          <p class="tariff__label" id="criminal-prices">Стоимость по&nbsp;уголовным делам</p>
+          <ul class="tariff__list" role="list">
+            <li class="tariff__item"><span>Защита подозреваемых и&nbsp;обвиняемых</span><b>от&nbsp;15&nbsp;000&nbsp;₽</b></li>
+            <li class="tariff__item"><span>Защита потерпевших и&nbsp;свидетелей</span><b>от&nbsp;15&nbsp;000&nbsp;₽</b></li>
+            <li class="tariff__item"><span>Наркотики; кража, грабёж, разбой</span><b>от&nbsp;15&nbsp;000&nbsp;₽</b></li>
+            <li class="tariff__item"><span>Представительство в&nbsp;суде</span><b>от&nbsp;15&nbsp;000&nbsp;₽</b></li>
+          </ul>
+          <a class="btn btn--primary btn--wide" href="tel:+79111255559" data-site="phone-link">
+            <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>Позвонить адвокату
+          </a>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ===== 6. АДМИНИСТРАТИВНЫЕ ДЕЛА ===== -->
+    <section class="section theme-light" id="admin" aria-labelledby="admin-title">
+      <div class="container">
+        <h2 class="section__title" id="admin-title">Административные правонарушения и&nbsp;административные дела</h2>
+
+        <div class="admin">
+          <article class="admin__block">
+            <h3 class="admin__title">Защита по&nbsp;делам об&nbsp;административных правонарушениях</h3>
+            <dl class="stage-list stage-list--compact">
+              <div class="stage">
+                <dt class="stage__name">ст.&nbsp;18.8 <abbr title="Кодекс Российской Федерации об административных правонарушениях">КоАП&nbsp;РФ</abbr></dt>
+                <dd class="stage__desc">При административном выдворении</dd>
+              </div>
+              <div class="stage">
+                <dt class="stage__name">ст.&nbsp;18.15 <abbr title="Кодекс Российской Федерации об административных правонарушениях">КоАП&nbsp;РФ</abbr></dt>
+                <dd class="stage__desc">Помощь бизнесу при&nbsp;осуществлении проверок</dd>
+              </div>
+            </dl>
+          </article>
+
+          <article class="admin__block">
+            <h3 class="admin__title">Представление интересов по&nbsp;административным делам</h3>
+            <p class="admin__lead">Обжалование решений органов власти:</p>
+            <ul class="check-list" role="list">
+              <li>Запрет на&nbsp;въезд</li>
+              <li>Аннулирование <abbr title="вид на жительство">ВНЖ</abbr>/<abbr title="разрешение на временное проживание">РВП</abbr></li>
+              <li>Лишение гражданства</li>
+            </ul>
+          </article>
+        </div>
+
+        <!-- Факт из открытых реестров: основная доля практики — миграционные дела -->
+        <p class="admin__fact">
+          <span class="admin__fact-value">151</span>
+          <span class="admin__fact-text">из&nbsp;207 дел в&nbsp;практике&nbsp;— миграционные. По&nbsp;данным открытых судебных реестров.</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== 7. ПРАКТИКА В ЦИФРАХ ===== -->
+    <section class="section theme-paper" id="practice" aria-labelledby="practice-title">
+      <div class="container">
+        <h2 class="section__title" id="practice-title">Практика в&nbsp;цифрах</h2>
+
+        <!-- Цифры — статичный текст, без «накручивающихся» счётчиков:
+             число должно читаться сразу, в том числе скринридером и без JS. -->
+        <ul class="stats" role="list">
+          <li class="stats__item">
+            <span class="stats__value">207</span>
+            <span class="stats__label">судебных дел</span>
+          </li>
+          <li class="stats__item">
+            <span class="stats__value">41</span>
+            <span class="stats__label">суд Санкт-Петербурга и&nbsp;Ленинградской области</span>
+          </li>
+          <li class="stats__item">
+            <span class="stats__value">8<span class="stats__plus">+</span></span>
+            <span class="stats__label">лет стажа</span>
+          </li>
+        </ul>
+
+        <div class="practice">
+          <div class="practice__charts">
+            <!-- Диаграммы — обычные списки с видимыми числами; полосы лишь иллюстрируют их
+                 и скрыты от скринридеров. Длина полосы считается в CSS из --v / --max,
+                 поэтому данные записаны один раз — здесь, в разметке. -->
+            <figure class="chart">
+              <figcaption class="chart__title">По категориям дел</figcaption>
+              <ul class="bars" role="list" style="--max: 151">
+                <li class="bars__item" style="--v: 151">
+                  <span class="bars__label">Миграционные</span>
+                  <span class="bars__value">151<span class="sr-only"> дело</span></span>
+                  <span class="bars__track" aria-hidden="true"><span class="bars__fill"></span></span>
+                </li>
+                <li class="bars__item" style="--v: 33">
+                  <span class="bars__label">Административные</span>
+                  <span class="bars__value">33<span class="sr-only"> дела</span></span>
+                  <span class="bars__track" aria-hidden="true"><span class="bars__fill"></span></span>
+                </li>
+                <li class="bars__item" style="--v: 19">
+                  <span class="bars__label">Уголовные</span>
+                  <span class="bars__value">19<span class="sr-only"> дел</span></span>
+                  <span class="bars__track" aria-hidden="true"><span class="bars__fill"></span></span>
+                </li>
+                <li class="bars__item" style="--v: 4">
+                  <span class="bars__label">Прочие</span>
+                  <span class="bars__value">4<span class="sr-only"> дела</span></span>
+                  <span class="bars__track" aria-hidden="true"><span class="bars__fill"></span></span>
+                </li>
+              </ul>
+            </figure>
+
+            <figure class="chart">
+              <figcaption class="chart__title">По годам</figcaption>
+              <ul class="columns" role="list" style="--max: 83">
+                <li class="columns__item" style="--v: 9">
+                  <span class="columns__label">2023</span>
+                  <span class="columns__value">9<span class="sr-only"> дел</span></span>
+                  <span class="columns__bar" aria-hidden="true"></span>
+                </li>
+                <li class="columns__item" style="--v: 71">
+                  <span class="columns__label">2024</span>
+                  <span class="columns__value">71<span class="sr-only"> дело</span></span>
+                  <span class="columns__bar" aria-hidden="true"></span>
+                </li>
+                <li class="columns__item" style="--v: 83">
+                  <span class="columns__label">2025</span>
+                  <span class="columns__value">83<span class="sr-only"> дела</span></span>
+                  <span class="columns__bar" aria-hidden="true"></span>
+                </li>
+                <!-- Неполный год — штриховкой: глаз не должен сравнивать его с полными годами
+                     как равный. Сноска объясняет, что значит штриховка. -->
+                <li class="columns__item columns__item--partial" style="--v: 44">
+                  <span class="columns__label">2026<span aria-hidden="true">*</span><span class="sr-only"> (на&nbsp;октябрь)</span></span>
+                  <span class="columns__value">44<span class="sr-only"> дела</span></span>
+                  <span class="columns__bar" aria-hidden="true"></span>
+                </li>
+              </ul>
+              <p class="chart__note" aria-hidden="true">* 2026&nbsp;— на&nbsp;октябрь</p>
+            </figure>
+          </div>
+
+          <!-- «Выписка из реестра» — настоящая таблица: скринридер объявит заголовки
+               столбцов и название суда для каждого числа. -->
+          <div class="registry">
+            <table class="registry__table">
+              <caption class="registry__caption">
+                <span class="registry__kicker">Выписка</span>
+                <span class="registry__title">Суды по&nbsp;числу дел</span>
+                <span class="registry__meta">10 из&nbsp;41 суда</span>
+              </caption>
+              <thead>
+                <tr>
+                  <th class="registry__num" scope="col">№</th>
+                  <th class="registry__name" scope="col">Суд</th>
+                  <th class="registry__count" scope="col">Дел</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="registry__num">01</td>
+                  <th class="registry__name" scope="row"><span class="leader">Всеволожский городской суд</span></th>
+                  <td class="registry__count">26</td>
+                </tr>
+                <tr>
+                  <td class="registry__num">02</td>
+                  <th class="registry__name" scope="row"><span class="leader">Приморский районный суд</span></th>
+                  <td class="registry__count">23</td>
+                </tr>
+                <tr>
+                  <td class="registry__num">03</td>
+                  <th class="registry__name" scope="row"><span class="leader">Смольнинский районный суд</span></th>
+                  <td class="registry__count">23</td>
+                </tr>
+                <tr>
+                  <td class="registry__num">04</td>
+                  <th class="registry__name" scope="row"><span class="leader">Выборгский районный суд</span></th>
+                  <td class="registry__count">16</td>
+                </tr>
+                <tr>
+                  <td class="registry__num">05</td>
+                  <th class="registry__name" scope="row"><span class="leader">Калининский районный суд</span></th>
+                  <td class="registry__count">12</td>
+                </tr>
+                <tr>
+                  <td class="registry__num">06</td>
+                  <th class="registry__name" scope="row"><span class="leader">Красногвардейский районный суд</span></th>
+                  <td class="registry__count">11</td>
+                </tr>
+                <tr>
+                  <td class="registry__num">07</td>
+                  <th class="registry__name" scope="row"><span class="leader">Фрунзенский районный суд</span></th>
+                  <td class="registry__count">9</td>
+                </tr>
+                <tr>
+                  <td class="registry__num">08</td>
+                  <th class="registry__name" scope="row"><span class="leader">Кировский районный суд</span></th>
+                  <td class="registry__count">9</td>
+                </tr>
+                <tr>
+                  <td class="registry__num">09</td>
+                  <th class="registry__name" scope="row"><span class="leader">Московский районный суд</span></th>
+                  <td class="registry__count">7</td>
+                </tr>
+                <tr>
+                  <td class="registry__num">10</td>
+                  <th class="registry__name" scope="row"><span class="leader">Санкт-Петербургский городской суд</span></th>
+                  <td class="registry__count">7</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td class="registry__num"></td>
+                  <th class="registry__name" scope="row">Итого по&nbsp;десяти судам</th>
+                  <td class="registry__count">143</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        <div class="practice__source">
+          <p>По&nbsp;данным открытых судебных реестров. Список может быть неполным.</p>
+          <a class="link-arrow" href="https://harant.ru/lawyers/sankt-peterburg/zubriczkij-dmitrij-sergeevich/" target="_blank" rel="noopener">
+            Профиль на&nbsp;HARANT<span class="sr-only"> (откроется в&nbsp;новой вкладке)</span>
+            <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 8. ОБ АДВОКАТЕ ===== -->
+    <section class="section theme-dark" id="about" aria-labelledby="about-title">
+      <div class="container">
+        <!-- Слева — фото из кабинета (на десктопе колонка липкая), справа — слова
+             самого адвоката и хронология, которую читают сверху вниз. -->
+        <div class="about">
+          <!-- ФОТО ПОКА НЕТ — пустая заглушка 4 : 3 в рамке-паспарту. Когда придёт фото:
+               1) положите снимок в рабочей обстановке в assets/img/src/about.jpg
+                  (горизонтальный, от 1200 px по ширине; скрипт обрежет до 4 : 3 по центру);
+               2) выполните: bash build-images.sh
+               3) удалите строку с photo-slot ниже и снимите комментарий с <figure>.
+               loading="lazy": снимок далеко от первого экрана, грузим по подходу. -->
+          <div class="photo-slot photo-slot--about" aria-hidden="true"></div>
+          <!--
+          <figure class="about__photo">
+            <picture>
+              <source type="image/webp"
+                      srcset="assets/img/about-640.webp 640w, assets/img/about-1200.webp 1200w"
+                      sizes="(min-width: 64em) 30rem, calc(100vw - 2.5rem)">
+              <img class="about__img" src="assets/img/about.jpg" width="1200" height="900"
+                   alt="Адвокат Зубрицкий Дмитрий Сергеевич" loading="lazy" decoding="async">
+            </picture>
+            <figcaption class="about__caption">Литейный пр., 15</figcaption>
+          </figure>
+          -->
+
+          <div class="about__body">
+            <h2 class="section__title" id="about-title">Об&nbsp;адвокате</h2>
+            <p class="about__quote">Являюсь действующим адвокатом Санкт-Петербургской коллегии адвокатов имени Ф.&nbsp;Н.&nbsp;Плевако. До&nbsp;получения в&nbsp;установленном порядке статуса адвоката работал в&nbsp;судебной системе.</p>
+            <h3 class="about__sub">Опыт работы</h3>
+            <ol class="timeline" role="list">
+              <li class="timeline__item">
+                <p class="timeline__period"><time datetime="2023">2023</time>&nbsp;— <abbr title="настоящее время">н.&nbsp;в.</abbr></p>
+                <div class="timeline__body">
+                  <p class="timeline__role">Адвокат</p>
+                  <p class="timeline__place"><abbr title="Санкт-Петербургская коллегия адвокатов">СПКА</abbr> им.&nbsp;Ф.&nbsp;Н.&nbsp;Плевако</p>
+                </div>
+              </li>
+              <li class="timeline__item">
+                <p class="timeline__period"><time datetime="2022">2022</time>–<time datetime="2023">2023</time></p>
+                <div class="timeline__body">
+                  <p class="timeline__role">Частная юридическая практика</p>
+                </div>
+              </li>
+              <li class="timeline__item">
+                <p class="timeline__period"><time datetime="2020">2020</time>–<time datetime="2022">2022</time></p>
+                <div class="timeline__body">
+                  <p class="timeline__role">Юрист</p>
+                  <p class="timeline__place">«Единый Центр Защиты»</p>
+                </div>
+              </li>
+              <li class="timeline__item">
+                <p class="timeline__period"><time datetime="2018">2018</time>–<time datetime="2020">2020</time></p>
+                <div class="timeline__body">
+                  <p class="timeline__role">Секретарь судебного заседания</p>
+                  <p class="timeline__place">Суд общей юрисдикции</p>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <h3 class="merits__title">Образование и&nbsp;квалификация</h3>
+        <ul class="merits" role="list">
+          <li class="merit">
+            <p class="merit__year"><time datetime="2018">2018</time></p>
+            <h4 class="merit__title">Юриспруденция, бакалавр</h4>
+            <p class="merit__desc">Северо-Западный филиал Российской академии правосудия</p>
+          </li>
+          <li class="merit">
+            <p class="merit__year"><time datetime="2020">2020</time></p>
+            <h4 class="merit__title">Магистр</h4>
+            <p class="merit__desc">Северо-Западный филиал Российской академии правосудия</p>
+          </li>
+          <li class="merit">
+            <p class="merit__year"><time datetime="2025">2025</time></p>
+            <h4 class="merit__title">Повышение квалификации</h4>
+            <p class="merit__desc">Уголовная кассация; оглашение показаний по&nbsp;<abbr title="Уголовно-процессуальный кодекс">УПК</abbr></p>
+          </li>
+        </ul>
+
+      </div>
+    </section>
+
+    <!-- ===== 9. ПРОВЕРИТЬ АДВОКАТА ===== -->
+    <section class="section theme-light" id="verify" aria-labelledby="verify-title">
+      <div class="container">
+        <h2 class="section__title" id="verify-title">Проверить адвоката</h2>
+
+        <ul class="platforms" role="list">
+          <li>
+            <a class="platform" href="https://harant.ru/lawyers/sankt-peterburg/zubriczkij-dmitrij-sergeevich/" target="_blank" rel="noopener">
+              <span class="platform__logo">HARANT</span>
+              <span class="platform__meta">Профиль адвоката</span>
+              <span class="platform__link">Открыть профиль<span class="sr-only"> (откроется в&nbsp;новой вкладке)</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+            </a>
+          </li>
+          <li>
+            <a class="platform" href="https://harant.ru/proverka-statusa-advokata/?search_reestr=47/2790" target="_blank" rel="noopener">
+              <span class="platform__logo">Реестр адвокатов</span>
+              <span class="platform__meta">Проверка статуса по&nbsp;рег.&nbsp;№&nbsp;47/2790</span>
+              <span class="platform__link">Проверить статус<span class="sr-only"> (откроется в&nbsp;новой вкладке)</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+            </a>
+          </li>
+          <li>
+            <div class="platform platform--static">
+              <span class="platform__logo">Удостоверение №&nbsp;3045</span>
+              <span class="platform__meta">Санкт-Петербургская коллегия адвокатов им.&nbsp;Ф.&nbsp;Н.&nbsp;Плевако, рег.&nbsp;№&nbsp;47/2790</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== 10. СТОИМОСТЬ И УСЛОВИЯ ===== -->
+    <section class="section theme-paper" id="prices" aria-labelledby="prices-title">
+      <div class="container">
+        <h2 class="section__title" id="prices-title">Стоимость и&nbsp;условия</h2>
+
+        <ul class="pricing" role="list">
+          <li class="price">
+            <h3 class="price__title">Консультация устная</h3>
+            <p class="price__value">5&nbsp;000&nbsp;₽</p>
+            <a class="btn btn--ghost" href="tel:+79111255559" data-site="phone-link">Позвонить</a>
+          </li>
+          <li class="price">
+            <h3 class="price__title">Консультация письменная</h3>
+            <p class="price__value">10&nbsp;000&nbsp;₽</p>
+            <a class="btn btn--ghost" href="https://t.me/zDmitryS" target="_blank" rel="noopener" data-site="telegram-link">Написать в&nbsp;Telegram</a>
+          </li>
+          <!-- Основной формат — инвертированная тёмная карточка -->
+          <li class="price price--main">
+            <h3 class="price__title">Представительство и&nbsp;защита</h3>
+            <p class="price__value"><span class="price__from">от</span>&nbsp;15&nbsp;000&nbsp;₽</p>
+            <ul class="price__list" role="list">
+              <li>Представительство в&nbsp;суде</li>
+              <li>Составление претензии&nbsp;/ искового заявления</li>
+              <li>Обжалование решений о&nbsp;депортации</li>
+              <li>Защита подозреваемых и&nbsp;обвиняемых</li>
+              <li>Защита потерпевших и&nbsp;свидетелей</li>
+              <li>Наркотики; кража, грабёж, разбой</li>
+              <li>Возмещение ущерба при&nbsp;ДТП</li>
+            </ul>
+            <a class="btn btn--primary" href="tel:+79111255559" data-site="phone-link">Позвонить адвокату</a>
+          </li>
+        </ul>
+
+        <div class="terms">
+          <h3 class="terms__title">Условия</h3>
+          <ul class="terms__list" role="list">
+            <li class="terms__item">Рассрочка</li>
+            <li class="terms__item">Скидка 10&nbsp;% при&nbsp;повторном обращении</li>
+            <li class="terms__item">Работа по&nbsp;договору</li>
+            <li class="terms__item">Оплата наличными и&nbsp;картой</li>
+            <li class="terms__item">Выезд к&nbsp;клиенту</li>
+            <li class="terms__item">Встреча в&nbsp;офисе</li>
+            <li class="terms__item">Работа в&nbsp;выходные</li>
+            <li class="terms__item">Круглосуточно</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 11. КОНТАКТЫ ===== -->
+    <section class="section theme-dark" id="contacts" aria-labelledby="contacts-title">
+      <div class="container contacts">
+        <div class="contacts__info">
+          <h2 class="section__title" id="contacts-title">Контакты</h2>
+
+          <address class="contacts__address">
+            <dl class="contacts__list">
+              <div class="contacts__row">
+                <dt class="contacts__label">Адрес</dt>
+                <dd class="contacts__value">Санкт-Петербург, Литейный пр., д.&nbsp;15, лит.&nbsp;А, офис&nbsp;5</dd>
+              </div>
+              <div class="contacts__row">
+                <dt class="contacts__label">Метро</dt>
+                <dd class="contacts__value">Маяковская, Достоевская (около&nbsp;500&nbsp;м)</dd>
+              </div>
+              <div class="contacts__row">
+                <dt class="contacts__label">Телефон</dt>
+                <dd class="contacts__value"><a class="contacts__link" href="tel:+79111255559" data-site="phone-link"><span data-site="phone-text">+7 (911) 125-55-59</span></a></dd>
+              </div>
+              <div class="contacts__row">
+                <dt class="contacts__label">Telegram</dt>
+                <dd class="contacts__value"><a class="contacts__link" href="https://t.me/zDmitryS" target="_blank" rel="noopener" data-site="telegram-link"><span data-site="telegram-text">@zDmitryS</span></a></dd>
+              </div>
+              <div class="contacts__row">
+                <dt class="contacts__label">WhatsApp</dt>
+                <dd class="contacts__value"><a class="contacts__link" href="https://wa.me/79111255559" target="_blank" rel="noopener" data-site="whatsapp-link"><span data-site="phone-text">+7 (911) 125-55-59</span></a></dd>
+              </div>
+              <div class="contacts__row">
+                <dt class="contacts__label">Почта</dt>
+                <dd class="contacts__value"><a class="contacts__link" href="mailto:advokat.zubritskiy@gmail.com" data-site="email-link"><span data-site="email-text">advokat.zubritskiy@gmail.com</span></a></dd>
+              </div>
+            </dl>
+          </address>
+
+          <p class="contacts__note">Круглосуточно, без&nbsp;выходных.</p>
+
+          <div class="contacts__actions">
+            <a class="btn btn--primary" href="tel:+79111255559" data-site="phone-link">
+              <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>Позвонить
+            </a>
+            <a class="btn btn--ghost" href="https://t.me/zDmitryS" target="_blank" rel="noopener" data-site="telegram-link">
+              <svg class="icon" aria-hidden="true"><use href="#i-telegram"/></svg>Написать в&nbsp;Telegram
+            </a>
+            <a class="btn btn--ghost" href="https://wa.me/79111255559" target="_blank" rel="noopener" data-site="whatsapp-link">
+              <svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg>Написать в&nbsp;WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <div class="contacts__map">
+          <!-- Карта не вставлена в HTML: iframe создаёт main.js, когда блок подходит
+               к экрану (адрес — в data-src). Встроенный loading="lazy" не подходит:
+               порог у него задаёт браузер (в Chrome — до нескольких экранов), и на
+               одностраничнике карта начинала бы грузиться почти сразу, забирая сеть
+               и процессор у первого экрана. Без JS остаётся заглушка со ссылкой. -->
+          <div class="map" data-map
+               data-src="https://yandex.ru/map-widget/v1/?text=%D0%A1%D0%B0%D0%BD%D0%BA%D1%82-%D0%9F%D0%B5%D1%82%D0%B5%D1%80%D0%B1%D1%83%D1%80%D0%B3%2C%20%D0%9B%D0%B8%D1%82%D0%B5%D0%B9%D0%BD%D1%8B%D0%B9%20%D0%BF%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82%2C%2015&amp;z=16"
+               data-title="Карта: Санкт-Петербург, Литейный проспект, 15">
+            <div class="map__placeholder">
+              <p class="map__address">Литейный пр., д.&nbsp;15</p>
+              <a class="link-arrow" href="https://yandex.ru/maps/?text=%D0%A1%D0%B0%D0%BD%D0%BA%D1%82-%D0%9F%D0%B5%D1%82%D0%B5%D1%80%D0%B1%D1%83%D1%80%D0%B3%2C%20%D0%9B%D0%B8%D1%82%D0%B5%D0%B9%D0%BD%D1%8B%D0%B9%20%D0%BF%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82%2C%2015&amp;z=16" target="_blank" rel="noopener">
+                Открыть в&nbsp;Яндекс&nbsp;Картах<span class="sr-only"> (откроется в&nbsp;новой вкладке)</span>
+                <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+              </a>
+            </div>
+          </div>
+          <p class="contacts__caption">Литейный пр., д.&nbsp;15, лит.&nbsp;А, офис&nbsp;5&nbsp;— метро «Маяковская» и&nbsp;«Достоевская»</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== 12. ПОДВАЛ ===== -->
+  <footer class="footer theme-deep">
+    <div class="footer__inner container">
+      <p class="footer__name">Адвокат Зубрицкий Дмитрий Сергеевич · <abbr title="Санкт-Петербургская коллегия адвокатов">СПКА</abbr> им.&nbsp;Ф.&nbsp;Н.&nbsp;Плевако · рег.&nbsp;№&nbsp;47/2790</p>
+
+      <nav class="footer__nav" aria-label="Разделы сайта в подвале">
+        <ul class="footer__links" role="list">
+          <li><a href="#criminal">Уголовные дела</a></li>
+          <li><a href="#admin">Административные дела</a></li>
+          <li><a href="#practice">Практика</a></li>
+          <li><a href="#about">Об&nbsp;адвокате</a></li>
+          <li><a href="#prices">Стоимость</a></li>
+          <li><a href="#contacts">Контакты</a></li>
+        </ul>
+      </nav>
+
+      <p class="footer__note">Информация на&nbsp;сайте не&nbsp;является публичной офертой.</p>
+
+      <ul class="footer__links footer__links--ext" role="list">
+        <li><a href="https://harant.ru/lawyers/sankt-peterburg/zubriczkij-dmitrij-sergeevich/" target="_blank" rel="noopener">HARANT<span class="sr-only"> (откроется в&nbsp;новой вкладке)</span></a></li>
+        <li><a href="https://t.me/zDmitryS" target="_blank" rel="noopener" data-site="telegram-link">Telegram<span class="sr-only"> (откроется в&nbsp;новой вкладке)</span></a></li>
+        <li><a href="mailto:advokat.zubritskiy@gmail.com" data-site="email-link">Почта</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- ===== 13. МОБИЛЬНАЯ ПАНЕЛЬ ===== -->
+  <!-- Видна только до 768 px. Пока на экране кнопки первого экрана, панель спрятана,
+       чтобы не дублировать их; прячется и при открытой клавиатуре (main.js). -->
+  <aside class="mobile-bar" aria-label="Быстрая связь" data-mobile-bar>
+    <a class="mobile-bar__btn mobile-bar__btn--primary" href="tel:+79111255559" data-site="phone-link">
+      <svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>Позвонить
+    </a>
+    <a class="mobile-bar__btn" href="https://wa.me/79111255559" target="_blank" rel="noopener" data-site="whatsapp-link">
+      <svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp
+    </a>
+    <a class="mobile-bar__btn" href="https://t.me/zDmitryS" target="_blank" rel="noopener" data-site="telegram-link">
+      <svg class="icon" aria-hidden="true"><use href="#i-telegram"/></svg>Telegram
+    </a>
+  </aside>
+</body>
+</html>
